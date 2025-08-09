@@ -121,19 +121,19 @@ export const UserDashboard = ({ userType, username }: UserDashboardProps) => {
   }
 
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className="space-y-6 animate-fade-in transition-all duration-500">
       <div className="text-center">
-        <h2 className="text-3xl font-bold mb-2">
+        <h2 className="text-3xl font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-green-600">
           مرحباً {userType === "single" && customers.length > 0 ? customers[0].customer_name : username}
         </h2>
-        <p className="text-muted-foreground">
+        <p className="text-muted-foreground text-lg">
           {userType === "multiple" ? "بيانات خطوطك" : "بيانات خطك"}
         </p>
       </div>
 
       <div className="grid gap-6">
         {customers.map((customer, index) => (
-          <Card key={customer.id} className="animate-fade-in shadow-lg" style={{ animationDelay: `${index * 0.1}s` }}>
+          <Card key={customer.id} className="animate-fade-in shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 border-l-4 border-l-blue-500" style={{ animationDelay: `${index * 0.1}s` }}>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Wifi className="h-5 w-5 text-blue-600" />
@@ -141,29 +141,29 @@ export const UserDashboard = ({ userType, username }: UserDashboardProps) => {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4 bg-gradient-to-r from-blue-50 to-green-50 rounded-lg">
                 <div className="flex items-center gap-2">
                   <Phone className="h-4 w-4 text-muted-foreground" />
                   <span className="font-medium">رقم الموبايل:</span>
-                  <span>{customer.mobile_number}</span>
+                  <span className="text-blue-600 font-semibold">{customer.mobile_number}</span>
                 </div>
                 
                 <div className="flex items-center gap-2">
                   <Wifi className="h-4 w-4 text-muted-foreground" />
                   <span className="font-medium">نوع الخط:</span>
-                  <Badge variant="outline">{customer.line_type} جيجا</Badge>
+                  <Badge variant="outline" className="bg-green-100 text-green-700 border-green-300">{customer.line_type} جيجا</Badge>
                 </div>
                 
                 <div className="flex items-center gap-2">
                   <Calendar className="h-4 w-4 text-muted-foreground" />
                   <span className="font-medium">تاريخ الشحن:</span>
-                  <span>{formatDate(customer.charging_date)}</span>
+                  <span className="text-purple-600 font-semibold">{formatDate(customer.charging_date)}</span>
                 </div>
                 
                 <div className="flex items-center gap-2">
                   <Calendar className="h-4 w-4 text-muted-foreground" />
                   <span className="font-medium">تاريخ التجديد:</span>
-                  <span>{formatRenewal(customer.charging_date, customer.renewal_date)}</span>
+                  <span className="text-orange-600 font-semibold">{formatRenewal(customer.charging_date, customer.renewal_date)}</span>
                 </div>
               </div>
             </CardContent>

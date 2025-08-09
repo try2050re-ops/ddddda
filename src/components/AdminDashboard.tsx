@@ -47,16 +47,16 @@ export const AdminDashboard = () => {
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 animate-fade-in">
       {!showForm ? (
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-8">
           <div className="flex justify-center">
-            <TabsList className="grid w-full max-w-2xl grid-cols-2 animate-scale-in">
-              <TabsTrigger value="dashboard" className="flex items-center gap-2">
+            <TabsList className="grid w-full max-w-2xl grid-cols-2 animate-scale-in shadow-lg bg-white/80 backdrop-blur-sm">
+              <TabsTrigger value="dashboard" className="flex items-center gap-2 transition-all duration-300 hover:scale-105">
                 <BarChart3 className="h-4 w-4" />
                 لوحة التحكم
               </TabsTrigger>
-              <TabsTrigger value="customers" className="flex items-center gap-2">
+              <TabsTrigger value="customers" className="flex items-center gap-2 transition-all duration-300 hover:scale-105">
                 <Users className="h-4 w-4" />
                 العملاء
               </TabsTrigger>
@@ -87,7 +87,7 @@ export const AdminDashboard = () => {
         <Button
           onClick={handleAddCustomer}
           size="lg"
-          className="rounded-full h-14 w-14 shadow-lg hover-scale animate-pulse"
+          className="rounded-full h-14 w-14 shadow-lg hover-scale animate-bounce bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700"
         >
           <Plus className="h-6 w-6" />
         </Button>

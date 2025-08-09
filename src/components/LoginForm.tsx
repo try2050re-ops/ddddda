@@ -4,8 +4,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Footer } from "@/components/Footer";
 import { useToast } from "@/hooks/use-toast";
-import { Eye, EyeOff, Lock, User, Phone } from "lucide-react";
+import { Eye, EyeOff, Lock, User, Phone, Network } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface LoginFormProps {
@@ -80,89 +81,107 @@ export const LoginForm = ({ onLogin }: LoginFormProps) => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50 flex items-center justify-center p-4">
-      <Card className="w-full max-w-md shadow-2xl animate-scale-in">
-        <CardHeader className="text-center">
-          <div className="mx-auto mb-4 p-3 bg-gradient-to-r from-blue-600 to-green-600 rounded-full w-16 h-16 flex items-center justify-center">
-            <Lock className="h-8 w-8 text-white" />
-          </div>
-          <CardTitle className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-green-600">
-            تسجيل الدخول
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="space-y-2">
-              <Label htmlFor="userType">نوع المستخدم</Label>
-              <Select value={userType} onValueChange={setUserType} required>
-                <SelectTrigger>
-                  <SelectValue placeholder="اختر نوع المستخدم" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="admin">مدير النظام</SelectItem>
-                  <SelectItem value="multiple">مستخدم متعدد الخطوط</SelectItem>
-                  <SelectItem value="single">مستخدم عادي</SelectItem>
-                </SelectContent>
-              </Select>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50 flex flex-col">
+      <div className="flex-1 flex items-center justify-center p-4">
+        <Card className="w-full max-w-md shadow-2xl animate-scale-in transition-all duration-500 hover:shadow-3xl">
+          <CardHeader className="text-center">
+            <div className="mx-auto mb-4 p-3 bg-gradient-to-r from-blue-600 to-green-600 rounded-full w-16 h-16 flex items-center justify-center shadow-lg animate-pulse">
+              <Network className="h-8 w-8 text-white" />
             </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="username">
-                {userType === "single" ? "رقم الموبايل" : "اسم المستخدم"}
-              </Label>
-              <div className="relative">
-                {userType === "single" ? (
-                  <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                ) : (
-                  <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                )}
-                <Input
-                  id="username"
-                  type="text"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  placeholder={userType === "single" ? "أدخل رقم الموبايل" : "أدخل اسم المستخدم"}
-                  className="pl-10 text-right"
-                  required
-                />
+            <CardTitle className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-green-600">
+              تسجيل الدخول
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="space-y-2">
+                <Label htmlFor="userType">نوع المستخدم</Label>
+                <Select value={userType} onValueChange={setUserType} required>
+                  <SelectTrigger className="transition-all duration-300 hover:border-blue-400 focus:border-blue-500">
+                    <SelectValue placeholder="اختر نوع المستخدم" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="admin" className="hover:bg-blue-50 transition-colors">
+                      <div className="flex items-center gap-2">
+                        <Lock className="h-4 w-4 text-blue-600" />
+                        مدير النظام
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="multiple" className="hover:bg-green-50 transition-colors">
+                      <div className="flex items-center gap-2">
+                        <Network className="h-4 w-4 text-green-600" />
+                        مستخدم متعدد الخطوط
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="single" className="hover:bg-purple-50 transition-colors">
+                      <div className="flex items-center gap-2">
+                        <User className="h-4 w-4 text-purple-600" />
+                        مستخدم عادي
+                      </div>
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
-            </div>
 
-            {userType !== "single" && (
-            <div className="space-y-2">
-              <Label htmlFor="password">كلمة المرور</Label>
-              <div className="relative">
-                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input
-                  id="password"
-                  type={showPassword ? "text" : "password"}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="أدخل كلمة المرور"
-                  className="pl-10 pr-10 text-right"
-                  required
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground"
-                >
-                  {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                </button>
+              <div className="space-y-2">
+                <Label htmlFor="username">
+                  {userType === "single" ? "رقم الموبايل" : "اسم المستخدم"}
+                </Label>
+                <div className="relative">
+                  {userType === "single" ? (
+                    <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground transition-colors" />
+                  ) : (
+                    <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground transition-colors" />
+                  )}
+                  <Input
+                    id="username"
+                    type="text"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    placeholder={userType === "single" ? "أدخل رقم الموبايل" : "أدخل اسم المستخدم"}
+                    className="pl-10 text-right transition-all duration-300 hover:border-blue-400 focus:border-blue-500"
+                    required
+                  />
+                </div>
               </div>
-            </div>
-            )}
 
-            <Button 
-              type="submit" 
-              className="w-full hover-scale bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700"
-              disabled={loading || !userType}
-            >
-              {loading ? "جاري تسجيل الدخول..." : "تسجيل الدخول"}
-            </Button>
-          </form>
-        </CardContent>
-      </Card>
+              {userType !== "single" && (
+              <div className="space-y-2 animate-fade-in">
+                <Label htmlFor="password">كلمة المرور</Label>
+                <div className="relative">
+                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground transition-colors" />
+                  <Input
+                    id="password"
+                    type={showPassword ? "text" : "password"}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="أدخل كلمة المرور"
+                    className="pl-10 pr-10 text-right transition-all duration-300 hover:border-blue-400 focus:border-blue-500"
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  </button>
+                </div>
+              </div>
+              )}
+
+              <Button 
+                type="submit" 
+                className="w-full hover-scale bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                disabled={loading || !userType}
+              >
+                {loading ? "جاري تسجيل الدخول..." : "تسجيل الدخول"}
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
+      </div>
+      <Footer />
     </div>
   );
 };

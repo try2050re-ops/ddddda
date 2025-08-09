@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { LoginForm } from "@/components/LoginForm";
 import { AdminDashboard } from "@/components/AdminDashboard";
 import { UserDashboard } from "@/components/UserDashboard";
+import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { LogOut } from "lucide-react";
 
@@ -84,7 +85,7 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50 flex flex-col">
       <div className="container mx-auto px-4 py-8">
         <header className="flex justify-between items-center mb-12 animate-fade-in">
           <div className="text-center flex-1">
@@ -112,6 +113,7 @@ const Index = () => {
         
         {renderDashboard()}
       </div>
+      <Footer />
     </div>
   );
 };
